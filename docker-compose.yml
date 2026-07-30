@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  study-assistant:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-study-assistant
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "${API_PORT:-8000}:8000"
+    volumes:
+      - app-data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  app-data:

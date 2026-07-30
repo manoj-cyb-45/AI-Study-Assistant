@@ -1,0 +1,73 @@
+services:
+  - type: web
+    name: ai-study-assistant
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeploy: true
+    disk:
+      name: study-assistant-data
+      mountPath: /app/data
+      sizeGB: 5
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_USE_WEBHOOK
+        value: "true"
+      - key: TELEGRAM_WEBHOOK_URL
+        sync: false
+      - key: TELEGRAM_WEBHOOK_SECRET
+        generateValue: true
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_BASE_URL
+        value: https://openrouter.ai/api/v1
+      - key: DEFAULT_LLM_MODEL
+        value: openai/gpt-4o-mini
+      - key: LLM_TEMPERATURE
+        value: "0.4"
+      - key: LLM_MAX_TOKENS
+        value: "1500"
+      - key: LLM_REQUEST_TIMEOUT_SECONDS
+        value: "45"
+      - key: LLM_MAX_RETRIES
+        value: "3"
+      - key: GITHUB_REPO_URL
+        sync: false
+      - key: GITHUB_BRANCH
+        value: main
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: ADMIN_USER_IDS
+        sync: false
+      - key: SYNC_INTERVAL_MINUTES
+        value: "30"
+      - key: DATABASE_PATH
+        value: /app/data/study_assistant.db
+      - key: UPLOAD_DIR
+        value: /app/data/repo
+      - key: CACHE_DIR
+        value: /app/data/cache
+      - key: LOG_DIR
+        value: /app/data/logs
+      - key: BACKUP_DIR
+        value: /app/data/backups
+      - key: MAX_CONVERSATION_HISTORY
+        value: "20"
+      - key: SEARCH_RESULT_LIMIT
+        value: "8"
+      - key: SEARCH_CONTEXT_CHAR_LIMIT
+        value: "12000"
+      - key: SESSION_IDLE_TIMEOUT_MINUTES
+        value: "60"
+      - key: REQUEST_TIMEOUT_SECONDS
+        value: "30"
+      - key: LOG_LEVEL
+        value: INFO
+      - key: ENVIRONMENT
+        value: production
+      - key: API_HOST
+        value: 0.0.0.0
+      - key: API_PORT
+        value: "8000"
