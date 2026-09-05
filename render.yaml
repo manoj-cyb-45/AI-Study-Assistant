@@ -28,7 +28,7 @@ services:
       - key: DEFAULT_LLM_MODEL
         value: openai/gpt-6-astra
       - key: LLM_MAX_TOKENS
-          value: "15000"
+          value: "500"
       - key: LLM_REQUEST_TIMEOUT_SECONDS
         value: "120"
       - key: LLM_MAX_RETRIES
